@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 
-interface Product{
-    id: number,
-    name: string,
-    description?: string
+interface Product {
+  id: number;
+  name: string;
+  description?: string;
 }
 
 const useInventoryStore = defineStore("inventory", {
@@ -13,23 +13,28 @@ const useInventoryStore = defineStore("inventory", {
   }),
   actions: {
     async fetchProducts() {
-      ((this.isLoading = true),
-        await new Promise((res, rej) => setTimeout(res, 500)));
+      this.isLoading = true;
+
+      await new Promise((res) => setTimeout(res, 500));
 
       this.products = [
         { id: 1, name: "Apple" },
         { id: 2, name: "Banana" },
       ];
 
-      this.isLoading = false
+      this.isLoading = false;
     },
-    async updateProducts(productId: number, updatedValue: string){
-        this.products = this.products.map(p=>{
-            if(p.id === productId){
-                return {...p, name: updatedValue}
-            }else {return p}
-        })
-    }
+
+    async updateProducts(productId: number, updatedValue: string) {
+      this.products = this.products.map((p) => {
+        if (p.id === productId) {
+          return { ...p, name: updatedValue };
+        } else {
+          return p;
+        }
+      });
+    },
   },
 });
+
 export default useInventoryStore;
